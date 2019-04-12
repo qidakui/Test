@@ -1,4 +1,5 @@
 <?php
+增加一行
 use application\models\Activity\Activity;
 use application\models\Activity\ActivityExtension;
 use application\models\Activity\ActivityContent;
