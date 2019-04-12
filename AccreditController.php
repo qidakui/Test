@@ -1,22 +1,19 @@
 <?php
-/**
- * 授权管理 
- * @author hd
- */
+
 use application\models\ServiceRegion;
 use application\models\Accredit\Accredit;
 class AccreditController extends Controller{
-    
+
      private $msg = array(
         'Y' => '操作成功',
          1 => '数据非法，请正常输入',
          2 => '分支信息错误',
-    );    
-    
-    public function actionindex(){   
+    );
+
+    public function actionindex(){
         $this->render('index');
     }
-    
+
     public function actionAccredit_list(){
         $limit   	= trim(Yii::app()->request->getParam( 'iDisplayLength' ));
         $page   	= trim(Yii::app()->request->getParam( 'iDisplayStart' ));
@@ -34,7 +31,7 @@ class AccreditController extends Controller{
             $con = array();
         }
         $list = Accredit::model()->ger_Accredit_list($con, $ord, $field, $limit, $page);
-        echo CJSON::encode($list);         
+        echo CJSON::encode($list);
     }
     /**
      * 添加授权
@@ -55,7 +52,7 @@ class AccreditController extends Controller{
                         OperationLog::addLog(OperationLog::$operationOpenAccredit , 'del', '授权关闭', '', array(), $openAccredit);
                         $this->refreshRedis();
                     }else{
-                        OperationLog::addLog(OperationLog::$operationOpenAccredit , 'add', '开区授权',$openAccredit, array(), $openconfig);  
+                        OperationLog::addLog(OperationLog::$operationOpenAccredit , 'add', '开区授权',$openAccredit, array(), $openconfig);
                         $this->refreshRedis();
                     }
                     $msgNo = 'Y';
@@ -75,10 +72,10 @@ class AccreditController extends Controller{
         foreach ($openArea as $key=>$item){
             $newarray[] = $item->filiale_id!=QG_BRANCH_ID?substr($item->filiale_id, 0, 2):$item->filiale_id;
         }
-        foreach ($newarray as $key=>$row){         
+        foreach ($newarray as $key=>$row){
             Yii::app()->redis->getClient()->delete('fwxgx_'.'global_check_accredit_'.$row.  md5('global_check_accredit_'.$row));
         }
-        return true;    
+        return true;
     }
 }
 
