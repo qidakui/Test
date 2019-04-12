@@ -1,5 +1,4 @@
 <?php
-xxxxxxx
 
 class AccreditController extends Controller{
 
