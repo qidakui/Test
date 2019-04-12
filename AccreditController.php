@@ -1,7 +1,6 @@
 <?php
 
-use application\models\ServiceRegion;
-use application\models\Accredit\Accredit;
+
 class AccreditController extends Controller{
 
      private $msg = array(
